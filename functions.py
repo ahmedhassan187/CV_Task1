@@ -61,3 +61,29 @@ class Functions:
         plt.hist(g.ravel(),256,[0,256],color='g')
         plt.hist(b.ravel(),256,[0,256],color='b')
         plt.show()
+    # Function to compute gray level histogram 
+    def histogram_Compute(self,image):
+        img_height = image.shape[0]
+        img_width = image.shape[1]
+        hist = np.zeros([256],np.int32)
+        for x in range(0,img_height):
+            for y in range(0,img_width):
+                hist[image[x,y]] +=1
+        np.savetxt("./saved_text/gray scale histogram.txt",hist)
+        return hist
+    # plotting the gray scale histogram 
+    def histogram_Plot(self,histogram):
+        plt.figure()
+        plt.title("Histogram Distribution Curve")
+        plt.xlabel("Brightness")
+        plt.ylabel("number of Pixels")
+        plt.xlim([0,256]) # As gray scale levels vary from 0 -> 256
+        plt.plot(histogram)
+        plt.savefig("./saved_imgs/hisogram.jpg")
+        return "Success"
+    # function to normalize the image
+    def img_normalization(self,img):
+        Min = np.min(img)
+        Max = np.max(img)
+        return (((img- Min)/((Max-Min)))) #stretching histogram equation from 0->255 to 0.0 -> 1.0
+    
