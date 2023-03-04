@@ -87,3 +87,51 @@ class Functions:
         Max = np.max(img)
         return (((img- Min)/((Max-Min)))) #stretching histogram equation from 0->255 to 0.0 -> 1.0
     
+
+    #function to do sobel, roberts, prewitt and canny edge detection
+    def edge_detection(self,image,method):
+        image = self.rgb2gray(image)
+        image = self.padding(image)
+
+        if method == "sobel":
+            Gx = np.array([[-1,0,1],[-2,0,2],[-1,0,1]])
+            Gy = np.array([[-1,-2,-1],[0,0,0],[1,2,1]])
+        # elif method == "canny":
+        #     Gx = np.array([[-1,0,1],[-2,0,2],[-1,0,1]])
+        #     Gy = np.array([[-1,-2,-1],[0,0,0],[1,2,1]])
+        elif method == "roberts":
+            Gx = np.array([[1,0],[0,-1]])
+            Gy = np.array([[0,1],[-1,0]])
+
+        elif method == "prewitt":
+            Gx = np.array([[-1,0,1],[-1,0,1],[-1,0,1]])
+            Gy = np.array([[-1,-1,-1],[0,0,0],[1,1,1]])
+
+        new_image = np.zeros((image.shape[0],image.shape[1]))
+        for i in range(1,image.shape[0]-1):
+            for j in range(1,image.shape[1]-1):
+                Gx_value = np.sum((image[i-1:i+2,j-1:j+2]*Gx))
+                Gy_value = np.sum((image[i-1:i+2,j-1:j+2]*Gy))
+                new_image[i][j] = np.sqrt(Gx_value**2+Gy_value**2)
+        return new_image
+ 
+    
+
+    # function to equalize the image
+    def img_equalize(self,image):
+        '''
+        parameters:
+        image: input image
+        returns:
+        img2: equalized image
+        
+        '''
+        image = self.rgb2gray(image)
+        hist = self.histogram_Compute(image)
+        cdf = hist.cumsum()
+        cdf_normalized = cdf * hist.max()/ cdf.max()
+        cdf_m = np.ma.masked_equal(cdf,0)
+        cdf_m = (cdf_m - cdf_m.min())*255/(cdf_m.max()-cdf_m.min())
+        cdf = np.ma.filled(cdf_m,0).astype('uint8')
+        img2 = cdf[image]
+        return img2
