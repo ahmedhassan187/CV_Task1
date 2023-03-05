@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Task1</title>
+    <link rel="stylesheet" href="/static/css/main.css" />
+    <link rel="stylesheet" href="/static/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+</head>
+<body>
+    <div class="header">
+        <div class="tabs">
+            <div class="tab tab1 active-tab">Tab 1</div>
+            <div class="tab tab2">Tab 2</div>
+            <div class="tab tab3">Tab 3</div>
+        </div>
+    </div>
+    <div class="tab-body TB1">
+        <div class="container">
+            <div class="side-bar">
+                <div class="filters">
+                    <div class="filter mad-filter active-filter">Madian Filter</div>
+                    <div class="filter avg-filter">Averaging Filter</div>
+                    <div class="filter gaussian-filter">Gaussian Filter</div>
+                    <div class="filter lp-filter">Low-Pass Filter</div>
+                    <div class="filter hp-filter">High-Pass Filter</div>
+                </div>
+                <div class="snr">
+                    <div class="slider-title">
+                        SNR
+                    </div>
+                    <div class="slider">
+                        <input type="range" step="1" min="0" max="100" value="100" id="snr-slider">
+                        <div class="snr-slider-value">100</div>
+                    </div>
+                </div>
+            </div>
+            <div class="imgs"></div>
+        </div>
+    </div>
+    <div class="tab-body TB2">
+        ANA TAB 2
+    </div>
+    <div class="tab-body TB3">
+        ANA TAB 3
+    </div>
+</body>
+<script src="/static/JS/main.js"></script>
+<script src="/static/JS/all.min.js"></script>
+</html>
