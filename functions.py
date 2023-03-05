@@ -103,9 +103,13 @@ class Functions:
         if method == "sobel":
             Gx = np.array([[-1,0,1],[-2,0,2],[-1,0,1]])
             Gy = np.array([[-1,-2,-1],[0,0,0],[1,2,1]])
-        # elif method == "canny":
-        #     Gx = np.array([[-1,0,1],[-2,0,2],[-1,0,1]])
-        #     Gy = np.array([[-1,-2,-1],[0,0,0],[1,2,1]])
+
+
+        elif method == "canny":
+            Gx = np.array([[-1,0,1],[-2,0,2],[-1,0,1]])
+            Gy = np.array([[-1,-2,-1],[0,0,0],[1,2,1]])
+            image = self.gaussian_filter(image)
+       
         elif method == "roberts":
             Gx = np.array([[1,0],[0,-1]])
             Gy = np.array([[0,1],[-1,0]])
@@ -120,10 +124,11 @@ class Functions:
                 Gx_value = np.sum((image[i-1:i+2,j-1:j+2]*Gx))
                 Gy_value = np.sum((image[i-1:i+2,j-1:j+2]*Gy))
                 new_image[i][j] = np.sqrt(Gx_value**2+Gy_value**2)
+
+
+        
         return new_image
  
-    
-
     # function to equalize the image
     def img_equalize(self,image):
         '''
