@@ -33,14 +33,21 @@ class Functions:
             for j in range(image_data.shape[1]):
                 new_img[i][j] = np.sum((padded[i:i+filter_size,j:j+filter_size]*filter))
         return new_img
-    def high_filter(self,image_data,filter_size=3):
-        filter = np.array([[-1,-1,-1],[-1,8,-1],[-1,-1,-1]])/9
-        padded = self.padding(image_data)
-        new_img = np.zeros((image_data.shape[0],image_data.shape[1]))
-        for i in range(image_data.shape[0]):
-            for j in range(image_data.shape[1]):
-                new_img[i][j] = np.sum((padded[i:i+filter_size,j:j+filter_size]*filter))
-        return new_img
+    def low_high_pass(image,selection,mask_size):
+        x = 256-mask_size
+        y = 256+mask_size
+        img_fou = np.fft.fft2(image)
+        img_fou = np.fft.fftshift(img_fou)
+        if selection == "high":
+            mask = np.ones((512,512))
+            mask[x:y,x:y] = 0
+        elif selection == "low":
+            mask = np.zeros((512,512))
+            mask[x:y,x:y] = 1
+        new_fou = mask*img_fou
+        new_fou = np.fft.ifftshift(new_fou)
+        new_fou = np.fft.ifft2(new_fou)
+        return np.abs(new_fou)
     def rgb2gray(self,image):
         new_image = 0.299*image[:,:,0]+0.587*image[:,:,1]+0.114*image[:,:,2]
         return new_image
