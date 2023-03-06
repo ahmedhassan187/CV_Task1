@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import cv2
 import os
-
+from scipy import signal
 class Functions:
     def __init__(self):
         pass
@@ -10,30 +10,29 @@ class Functions:
         padded_image = np.zeros((image.shape[0]+2,image.shape[1]+2))
         padded_image[1:image.shape[0]+1,1:image.shape[1]+1]=image 
         return padded_image
-    def average_filter(self,image_data,filter_size):
+    def gkernel(self,kernel_size=3, sig=2):
+        ax = np.linspace(-(kernel_size - 1) / 2., (kernel_size - 1) / 2., kernel_size)
+        xx, yy = np.meshgrid(ax, ax)
+        kernel = np.exp(-0.5 * (np.square(xx) + np.square(yy)) / np.square(sig))
+        return kernel / np.sum(kernel)
+    def average_filter(self,image_data,filter_size=3):
         filter = np.ones((filter_size,filter_size))/(filter_size)**2
-        padded = self.padding(image_data)
         new_img = np.zeros((image_data.shape[0],image_data.shape[1]))
-        for i in range(image_data.shape[0]):
-            for j in range(image_data.shape[1]):
-                new_img[i][j] = np.sum((padded[i:i+filter_size,j:j+filter_size]*filter))
+        new_img = signal.convolve2d(image_data,filter,mode='same',boundary='fill',fillvalue=0)
         return new_img
-    def median_filter(self,image_data,filter_size):
+    def median_filter(self,image_data,filter_size=3):
         padded = self.padding(image_data)
         new_img = np.zeros((image_data.shape[0],image_data.shape[1]))
-        for i in range(image_data.shape[0]):
-            for j in range(image_data.shape[1]):
+        for i in range(image_data.shape[0]-1):
+            for j in range(image_data.shape[1]-1):
                 new_img[i][j] = np.median(padded[i:i+filter_size,j:j+filter_size])
         return new_img
-    def gaussian_filter(self,image_data,filter_size=3):
-        filter = np.array([[1,2,1],[2,4,2],[1,2,1]])/16
-        padded = self.padding(image_data)
-        new_img = np.zeros((image_data.shape[0],image_data.shape[1]))
-        for i in range(image_data.shape[0]):
-            for j in range(image_data.shape[1]):
-                new_img[i][j] = np.sum((padded[i:i+filter_size,j:j+filter_size]*filter))
+    def gaussian_filter(self,image,kernel_size=3,sigma=2):
+        kernel = self.gkernel(kernel_size,sigma)
+        new_img = np.zeros((image.shape[0],image.shape[1]))
+        new_img = signal.convolve2d(image,kernel,mode='same',boundary='fill',fillvalue=0)
         return new_img
-    def low_high_pass(image,selection,mask_size):
+    def low_high_pass(image,selection='low',mask_size=20):
         x = 256-mask_size
         y = 256+mask_size
         img_fou = np.fft.fft2(image)
