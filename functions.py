@@ -60,7 +60,7 @@ class Functions:
         image2 = self.average_filter(image2)
         new_image = image1+image2
         return new_image
-    def rgb_histogram(image):
+    def rgb_histogram(image): #cumulative
         r = image[:,:,0]
         g = image[:,:,1]
         b = image[:,:,2]
@@ -68,8 +68,8 @@ class Functions:
         plt.hist(g.ravel(),256,[0,256],color='g')
         plt.hist(b.ravel(),256,[0,256],color='b')
         plt.show()
-    # Function to compute gray level histogram 
-    def histogram_Compute(self,image):
+    # Function to compute gray level histogram *distributive*
+    def Gray_histogram_Compute(self,image):
         img_height = image.shape[0]
         img_width = image.shape[1]
         hist = np.zeros([256],np.int32)
@@ -78,16 +78,49 @@ class Functions:
                 hist[image[x,y]] +=1
         np.savetxt("./saved_text/gray scale histogram.txt",hist)
         return hist
-    # plotting the gray scale histogram 
-    def histogram_Plot(self,histogram):
+    # plotting the gray scale histogram *distributive* 
+    def Gray_histogram_Plot(self,histogram):
         plt.figure()
         plt.title("Histogram Distribution Curve")
         plt.xlabel("Brightness")
         plt.ylabel("number of Pixels")
         plt.xlim([0,256]) # As gray scale levels vary from 0 -> 256
-        plt.plot(histogram)
-        plt.savefig("./saved_imgs/hisogram.jpg")
+        plt.plot(histogram,'gray')
+        plt.savefig("./saved_imgs/Gray_hisogram.jpg")
         return "Success"
+    # histogram for RGB *distributive*
+    def RGB_histogram(self,image):
+        image_Height = image.shape[0]
+        image_Width = image.shape[1]
+        image_Channels = image.shape[2]
+        histogram = np.zeros([256, image_Channels], np.int32)
+        for x in range(0, image_Height):
+            for y in range(0, image_Width):
+                for c in range(0, image_Channels):
+                        histogram[image[x,y,c], c] +=1
+        return histogram
+    #Plot the distributive RGB histogram each in separate plot
+    def Plot_RGBHistogram(self,RGB_Histogram):
+        # Separate Histograms for each color
+        plt.subplot(3, 1, 1)
+        plt.xlim([0, 256])
+        plt.title("histogram of Blue")
+        plt.plot(RGB_Histogram[:,0],'b')
+
+        plt.subplot(3, 1, 2)
+        plt.xlim([0, 256])
+        plt.title("histogram of Green")
+        plt.plot(RGB_Histogram[:,1],'g')
+        
+        plt.subplot(3, 1, 3)
+        plt.xlim([0, 256])
+        plt.title("histogram of Red")
+        
+        plt.plot(RGB_Histogram[:,2],'r')
+        # for clear view
+        plt.tight_layout()
+        plt.savefig("./saved_imgs/RGB_histogram.jpg")
+        return "success"
     # function to normalize the image
     def img_normalization(self,img):
         Min = np.min(img)
