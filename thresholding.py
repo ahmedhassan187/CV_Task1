@@ -67,7 +67,7 @@ def local_threshold(image, size):
 
 
 # Load an image in the greyscale
-image = cv2.imread('paper.png', cv2.IMREAD_GRAYSCALE)
+image = cv2.imread('./saved_imgs/paper.png', cv2.IMREAD_GRAYSCALE)
 print(image.shape)
 # apply threshold finder
 vv1 = thres_finder(image, thres=30, delta_T=1.0)
