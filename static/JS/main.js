@@ -24,42 +24,63 @@ document.addEventListener("click", (e)=>{
 // ################################################################################ //
 
     if(e.target.classList.contains("filter")){
+        raduis_value = document.getElementById('raduis').value
+        kernal_value = document.getElementById('kernal').value
         toggleClass(fTabFilters, "active-filter")
         e.target.classList.add("active-filter")
         filterType =e.target.classList[1]
-        json_request(filterType,'/filter')
+        //json_request(filterType,'/filter','output')
         filteredImg.src = '/static/imgs/filtered_img.jpg';
         console.log(filteredImg.src)
         if(e.target.classList.contains("kernal")){
+            filter = {
+                type: filterType,
+                raduissize:0,
+                kernalsize: kernal_value
+            }
+            json_request(filter,'/filter','output')
             kernalSizeBox.style.display = "flex"
             radiusBox.style.display = "none"
+            console.log(filter)
         }else if(e.target.classList.contains("radius-filter")){
+            filter = {
+                type: filterType,
+                raduissize: raduis_value,
+                kernalsize: 0
+            }
+            json_request(filter,'/filter','output')
             kernalSizeBox.style.display = "none"
             radiusBox.style.display = "flex"
+            console.log(filter)
         }
-
     }
 
     // ################################################################################ //
     if(e.target.classList.contains("noise-type")){
         toggleClass(fTabNoiseTypes, "active-noise-type")
-        e.target.classList.add("active-noise-type")
-        noisetype = e.target.classList[1]
-        json_request(noisetype,'/noise')
+        noisetype = e.target.classList
+        e.target.classList.add("active-noise-type") /// هنا يبودييييي ابعت نوع النيوز مش الكلمة دي(وش غاضب)
+        console.log(e.target)
+        console.log(e.target.classList[1])
     }
-})
-
-// ################################################################################ //
-// ################################################################################ //
-
-let snrSlider = document.getElementById("snr-slider")
-let snrSliderValue = document.querySelector(".snr-slider-value")
-snrSlider.addEventListener("input", (e) =>{
+    let snrSlider = document.getElementById("snr-slider")
+    let snrSliderValue = document.querySelector(".snr-slider-value")
+    snrSlider.addEventListener("input", (e) =>{
     snrSliderValue.innerHTML = snrSlider.value
     send_snr = snrSlider.value
-    json_request(send_snr,"/SNR")
     console.log(send_snr)
+    noise = {
+        type : noisetype,
+        snr : send_snr 
+    }
+    json_request(noise,"/noise",'input')
 })
+})
+
+// ################################################################################ //
+// ################################################################################ //
+
+
 
 //############################################## upload img ############### //
 
@@ -86,8 +107,7 @@ upload.addEventListener('change' , (e) => {
     fd.append("original_img",img1_send , "original_img");
     xhr.onreadystatechange = function() {
         if (xhr.status == 200) {
-            // filteredImg.src = './static/imgs/filtered_img.jpg';
-            console.log('ya booooody');
+            //filteredImg.src = './static/imgs/original_img.jpg';
         }
         }; 
     xhr.open("POST","/",true);

@@ -4,16 +4,21 @@ function toggleClass(div, classname){
     }
 }
 
-function json_request(data,route){
+
+function json_request(data,route,state){
     var xhr=new XMLHttpRequest();
     xhr.open("POST",route , true);
     xhr.setRequestHeader('Content-Type', 'application/json');    
     xhr.send(JSON.stringify(data));
     xhr.onload = function (e) {
         if (xhr.readyState === 4 && xhr.status === 200) {
-                //console.log(JSON.stringify(data))
-                send_img();
-                console.log('body the king')
+                if(state == 'input'){
+                send_img('./static/imgs/original_img.jpg','input');
+                }
+                if(state == 'output'){
+                    send_img('./static/imgs/filtered_img.jpg','output');
+                    console.log('wowowowo')
+                }
             } else {
             console.log('err')
         }
@@ -21,17 +26,22 @@ function json_request(data,route){
 }
 
 
-
-function send_img(){
-    checkIfImageExists('./static/imgs/filtered_img.jpg', (exists) => {
+function send_img(path,state){
+    checkIfImageExists(path, (exists) => {
     if (exists) {
-        console.log('Image exists.')
         var timestamp = new Date().getTime();
-        filtered = document.createElement('img')
-        filtered.src = './static/imgs/filtered_img.jpg?t=' + timestamp;
-        filteredImg.innerHTML = " ";
-        filteredImg.appendChild(filtered)         
-        console.log("sucessfully send"); 
+        if(state == 'input'){
+            original = document.createElement('img')
+            original.src = path +'?t=' + timestamp;
+            originalImg.innerHTML = " ";
+            originalImg.appendChild(original);   
+        }
+        else{
+            filtered = document.createElement('img')
+            filtered.src = path +'?t=' + timestamp;
+            filteredImg.innerHTML = " ";
+            filteredImg.appendChild(filtered);      
+            }
     } else {
         console.log('Image does not exists.')
     }
