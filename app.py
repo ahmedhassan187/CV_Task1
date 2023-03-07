@@ -50,21 +50,11 @@ def filter():
 def noise():
     if request.method == 'POST':
         noiseType = request.json['type']
-        snr = request.json['snr']
         print(noiseType)
-        print(snr)
         return render_template("main.html")
     else:
         return render_template("main.html")
-#@app.route('/SNR' , methods =['POST','GET'])
-#def snr():
-    #if request.method == 'POST':
-        #snr = request.json
-        #print(snr)
-        
-        #return render_template("main.html")
-    #else:
-        #return render_template("main.html")
+
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True , port=3500)

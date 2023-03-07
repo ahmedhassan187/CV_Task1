@@ -35,11 +35,11 @@
                     </form>
                     <div class="kernal-size">
                         <div class="kernal-size-title">Kernal Size</div>
-                        <input type="number" min="1" max="7" step="2" id="kernal">
+                        <input type="number" value="3" min="0" max="9" step="2" id="kernal">
                     </div>
                     <div class="radius">
                         <div class="radius-title">Radius Size</div>
-                        <input type="number" min="0" max="256" step="1" id="raduis">
+                        <input type="number" value="20"  min="0" max="256" step="1" id="raduis">
                     </div>
                 </div>
 
@@ -49,19 +49,10 @@
                     </div>
                     <div class="noise-types">
                         <form action="/noise" method="POST">
-                            <div class="noise-type uniorm-noise active-noise-type">Unifrom Noise</div>
+                            <div class="noise-type uniform-noise active-noise-type">Unifrom Noise</div>
                             <div class="noise-type gaussian-noise" >Gaussian Noise</div>
                             <div class="noise-type sp-noise" >Salt & Pepper Noise</div>
                         </form>
-                    </div>
-                    <div class="slider-title">
-                        SNR
-                    </div>
-                    <form action="/SNR" method="POST">
-                    <div class="slider">
-                        <input type="range" step="1" min="0" max="100" value="100" id="snr-slider">
-                        <div class="snr-slider-value">100</div>
-                    </form>
                     </div>
                 </div>
                 <div class="upload-img">

@@ -29,7 +29,6 @@ document.addEventListener("click", (e)=>{
         toggleClass(fTabFilters, "active-filter")
         e.target.classList.add("active-filter")
         filterType =e.target.classList[1]
-        //json_request(filterType,'/filter','output')
         filteredImg.src = '/static/imgs/filtered_img.jpg';
         console.log(filteredImg.src)
         if(e.target.classList.contains("kernal")){
@@ -58,23 +57,15 @@ document.addEventListener("click", (e)=>{
     // ################################################################################ //
     if(e.target.classList.contains("noise-type")){
         toggleClass(fTabNoiseTypes, "active-noise-type")
-        noisetype = e.target.classList
+        noisetype = e.target.classList[1]
         e.target.classList.add("active-noise-type") 
-        console.log(e.target)
         console.log(e.target.classList[1])
+        noise = {
+            type : noisetype,
+        }
+        json_request(noise,"/noise",'input')
     }
-    let snrSlider = document.getElementById("snr-slider")
-    let snrSliderValue = document.querySelector(".snr-slider-value")
-    snrSlider.addEventListener("input", (e) =>{
-    snrSliderValue.innerHTML = snrSlider.value
-    send_snr = snrSlider.value
-    console.log(send_snr)
-    noise = {
-        type : noisetype,
-        snr : send_snr 
-    }
-    json_request(noise,"/noise",'input')
-})
+
 })
 
 // ################################################################################ //
