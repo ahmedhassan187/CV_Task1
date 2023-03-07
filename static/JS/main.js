@@ -59,7 +59,7 @@ document.addEventListener("click", (e)=>{
     if(e.target.classList.contains("noise-type")){
         toggleClass(fTabNoiseTypes, "active-noise-type")
         noisetype = e.target.classList
-        e.target.classList.add("active-noise-type") /// هنا يبودييييي ابعت نوع النيوز مش الكلمة دي(وش غاضب)
+        e.target.classList.add("active-noise-type") 
         console.log(e.target)
         console.log(e.target.classList[1])
     }
