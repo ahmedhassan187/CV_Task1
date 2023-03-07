@@ -6,6 +6,10 @@ from scipy import signal
 class Functions:
     def __init__(self):
         pass
+    def display_image(self,image,title="tab1"):
+        image = np.array(image,dtype=np.uint8)
+        plt.imshow(image,cmap='gray')
+        plt.savefig('images/'+title+'.png')
     def padding(self,image):
         padded_image = np.zeros((image.shape[0]+2,image.shape[1]+2))
         padded_image[1:image.shape[0]+1,1:image.shape[1]+1]=image 
