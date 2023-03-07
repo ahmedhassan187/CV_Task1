@@ -1,13 +1,14 @@
 let tabs = document.getElementsByClassName("tab")
 let tabsBodies = document.getElementsByClassName("tab-body")
 let fTabFilters = document.getElementsByClassName("filter")
+let fTabNoiseTypes = document.getElementsByClassName("noise-type")
+let kernalSizeBox = document.querySelector(".kernal-size")
+let radiusBox = document.querySelector(".radius")
 
 document.addEventListener("click", (e)=>{
 
     if(e.target.classList.contains("tab")){
-        for(i = 0; i < tabs.length; i++){
-            tabs[i].classList.remove("active-tab")
-        }
+        toggleClass(tabs, "active-tab")
         e.target.classList.add("active-tab")
         for(i = 0; i < tabsBodies.length; i++){
             tabsBodies[i].style.display = "none"
@@ -20,10 +21,22 @@ document.addEventListener("click", (e)=>{
 // ################################################################################ //
 
     if(e.target.classList.contains("filter")){
-        for(i = 0; i < fTabFilters.length; i++){
-            fTabFilters[i].classList.remove("active-filter")
-        }
+        toggleClass(fTabFilters, "active-filter")
         e.target.classList.add("active-filter")
+        if(e.target.classList.contains("kernal")){
+            kernalSizeBox.style.display = "flex"
+            radiusBox.style.display = "none"
+        }else if(e.target.classList.contains("radius-filter")){
+            kernalSizeBox.style.display = "none"
+            radiusBox.style.display = "flex"
+        }
+    }
+
+    // ################################################################################ //
+
+    if(e.target.classList.contains("noise-type")){
+        toggleClass(fTabNoiseTypes, "active-noise-type")
+        e.target.classList.add("active-noise-type")
     }
 })
 

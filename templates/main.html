@@ -26,13 +26,34 @@
         <div class="container">
             <div class="side-bar">
                 <div class="filters">
-                    <div class="filter mad-filter active-filter">Madian Filter</div>
-                    <div class="filter avg-filter">Averaging Filter</div>
-                    <div class="filter gaussian-filter">Gaussian Filter</div>
-                    <div class="filter lp-filter">Low-Pass Filter</div>
-                    <div class="filter hp-filter">High-Pass Filter</div>
+                    <form action="/filter" method="POST">
+                        <div class="filter mad-filter active-filter kernal">Madian Filter</div>
+                        <div class="filter gaussian-filter kernal">Gaussian Filter</div>
+                        <div class="filter avg-filter kernal">Averaging Filter</div>
+                        <div class="filter lp-filter radius-filter">Low-Pass Filter</div>
+                        <div class="filter hp-filter radius-filter">High-Pass Filter</div>
+                    </form>
+                    <div class="kernal-size">
+                        <div class="kernal-size-title">Kernal Size</div>
+                        <input type="number" min="1" max="7" step="2">
+                    </div>
+                    <div class="radius">
+                        <div class="radius-title">Radius Size</div>
+                        <input type="number" min="0" max="256" step="1">
+                    </div>
                 </div>
+
                 <div class="snr">
+                    <div class="noise-title">
+                        <div class="title">Noise</div>
+                    </div>
+                    <div class="noise-types">
+                        <form action="/noise" method="POST">
+                            <div class="noise-type active-noise-type">Unifrom Noise</div>
+                            <div class="noise-type">Gaussian Noise</div>
+                            <div class="noise-type">Salt & Pepper Noise</div>
+                        </form>
+                    </div>
                     <div class="slider-title">
                         SNR
                     </div>
@@ -41,8 +62,18 @@
                         <div class="snr-slider-value">100</div>
                     </div>
                 </div>
+                <div class="upload-img">
+                    <input type="file">
+                </div>
             </div>
-            <div class="imgs"></div>
+            <div class="imgs">
+                <div class="img original-img">
+
+                </div>
+                <div class="img filtered-img">
+
+                </div>   
+            </div>
         </div>
     </div>
     <div class="tab-body TB2">
@@ -53,5 +84,6 @@
     </div>
 </body>
 <script src="/static/JS/main.js"></script>
+<script src="/static/JS/functions.js"></script>
 <script src="/static/JS/all.min.js"></script>
 </html>
