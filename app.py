@@ -89,6 +89,13 @@ def hybrid_raduis():
         raduis2 = request.json['img2_raduis']
         print(raduis1)
         print(raduis2)
+        img1 = cv2.imread('./static/imgs/firstimg.jpg',cv2.IMREAD_GRAYSCALE)
+        img2 = cv2.imread('./static/imgs/secondimg.jpg',cv2.IMREAD_GRAYSCALE)
+        img1 = Functions.low_high_pass(Functions,img1,'low',int(raduis1))
+        img2 = Functions.low_high_pass(Functions,img2,'high',int(raduis2))
+        new_img = img1+img2 
+        # new_img = Functions.hybrid(Functions,img1,img2,int(raduis1),int(raduis2))
+        Functions.display_image(Functions,new_img,'hybrid_img')
         return render_template("main.html")
     else:
         return render_template("main.html")

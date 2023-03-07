@@ -91,13 +91,13 @@ class Functions:
     def rgb2gray(self,image):
         new_image = 0.299*image[:,:,0]+0.587*image[:,:,1]+0.114*image[:,:,2]
         return new_image
-    def hybrid(self,image1,image2):
+    def hybrid(self,image1,image2,r1,r2):
         """image1: high filter image
         image2: low pass image"""
-        image1 = self.rgb2gray(image1)
-        image2 = self.rgb2gray(image2)
-        image1 = self.high_filter(image1)
-        image2 = self.average_filter(image2)
+        # image1 = self.rgb2gray(self,image1)
+        # image2 = self.rgb2gray(self,image2)
+        image1 = self.low_high_pass(image1,'low',r1)
+        image2 = self.low_high_pass(image2,'high',r2)
         new_image = image1+image2
         return new_image
     def rgb_histogram(image): #cumulative
