@@ -3,6 +3,7 @@ import numpy as np
 import cv2
 import os
 import random
+from scipy import ndimage
 from scipy import signal
 class Functions:
     def __init__(self):
@@ -178,9 +179,8 @@ class Functions:
 
 
         elif method == "canny":
-            Gx = np.array([[-1,0,1],[-2,0,2],[-1,0,1]])
-            Gy = np.array([[-1,-2,-1],[0,0,0],[1,2,1]])
-            image = self.gaussian_filter(image)
+            return self.canny_edge(image)
+
        
         elif method == "roberts":
             Gx = np.array([[1,0],[0,-1]])
@@ -201,6 +201,69 @@ class Functions:
         
         return new_image
  
+    def canny_edge(self,image, minVal=.1,maxVal=.15):
+        # impelementing canny edge detection
+        image = self.rgb2gray(image)
+        image = self.gaussian_filter(image,1)
+        image = self.padding(image)
+        gx,gy = self.SobelFilter(image)
+        Mag = np.hypot(gx,gy)
+
+        NMS = self.non_max_suppression(Mag)
+        image = self.hysteresis(self.Normalize(NMS),minVal,maxVal)
+        return image
+
+    def SobelFilter(self,img):
+        Gx = np.array([[-1,0,+1], [-2,0,+2],  [-1,0,+1]])
+        Res_x = ndimage.convolve(img, Gx)
+
+        Gy = np.array([[-1,-2,-1], [0,0,0], [+1,+2,+1]])
+        Res_y = ndimage.convolve(img, Gy)
+
+        return self.Normalize(Res_x), self.Normalize(Res_y)
+    def Normalize(self,img):
+        img = img/np.max(img)
+        return img
+
+    def non_max_suppression(self,image):
+        # non max suppression
+        image = self.padding(image)
+        for i in range(1,image.shape[0]-1):
+            for j in range(1,image.shape[1]-1):
+                if image[i,j] == 0:
+                    image[i,j] = 0
+                elif image[i,j] == 45:
+                    if image[i-1,j+1] > image[i,j] or image[i+1,j-1] > image[i,j]:
+                        image[i,j] = 0
+                elif image[i,j] == 90:
+                    if image[i-1,j] > image[i,j] or image[i+1,j] > image[i,j]:
+                        image[i,j] = 0
+                elif image[i,j] == 135:
+                    if image[i-1,j-1] > image[i,j] or image[i+1,j+1] > image[i,j]:
+                        image[i,j] = 0
+                else:
+                    if image[i,j-1] > image[i,j] or image[i,j+1] > image[i,j]:
+                        image[i,j] = 0
+        return image
+
+
+    def hysteresis(self,image,minVal=0.3,maxVal=.32):
+        # hysteresis thresholding
+        image = self.padding(image)
+        image[image > maxVal] = 255
+        image[image < minVal] = 0
+        for i in range(1,image.shape[0]-1):
+            for j in range(1,image.shape[1]-1):
+                if image[i,j] < maxVal and image[i,j] > minVal:
+                    if image[i-1,j-1] >= maxVal or image[i-1,j] >= maxVal or image[i-1,j+1] >= maxVal or image[i,j-1] >= maxVal or image[i,j+1] >= maxVal or image[i+1,j-1] >= maxVal or image[i+1,j] >= maxVal or image[i+1,j+1] >= maxVal:
+                        image[i,j] = 255
+                    else:
+                        image[i,j] = 0
+        return image
+
+            
+
+
     # function to equalize the image
     def img_equalize(self,image):
         '''
