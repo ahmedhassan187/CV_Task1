@@ -9,12 +9,12 @@ class Functions:
         pass
     def noisy(noise_typ, image):
         if noise_typ == "gaussian":
-            row, col, ch = image.shape
+            row, col = image.shape
             mean = 0
             var = 0.1
             sigma = var**0.5
-            gauss = np.random.normal(mean, sigma, (row, col, ch))
-            gauss = gauss.reshape(row, col, ch)
+            gauss = np.random.normal(mean, sigma, (row, col))
+            gauss = gauss.reshape(row, col)
             image = image + gauss
             return image
 
