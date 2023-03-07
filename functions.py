@@ -2,15 +2,50 @@ import matplotlib.pyplot as plt
 import numpy as np
 import cv2
 import os
+import random
 from scipy import signal
 class Functions:
     def __init__(self):
         pass
-    def display_image(self,image):
+    def noisy(noise_typ, image):
+        if noise_typ == "gaussian":
+            row, col, ch = image.shape
+            mean = 0
+            var = 0.1
+            sigma = var**0.5
+            gauss = np.random.normal(mean, sigma, (row, col, ch))
+            gauss = gauss.reshape(row, col, ch)
+            image = image + gauss
+            return image
+
+        elif noise_typ == "s&p":
+            row, col = image.shape
+            number_of_pixels = random.randint(300, 10000)
+            for i in range(number_of_pixels):
+                y_coord = random.randint(0, row - 1)
+                x_coord = random.randint(0, col - 1)
+                image[y_coord][x_coord] = 255
+            number_of_pixels = random.randint(300, 10000)
+            for i in range(number_of_pixels):
+                y_coord = random.randint(0, row - 1)
+                x_coord = random.randint(0, col - 1)
+                image[y_coord][x_coord] = 0
+                return image
+
+        elif noise_typ == 'uniform':
+            row, col = image.shape
+            a = 0
+            b = 0.2
+            n = np.zeros((row, col), dtype=np.float64)
+            for i in range(row):
+                for j in range(col):
+                    n[i][j] = np.random.uniform(a, b)
+            image = image+n
+            return image
+
+    def display_image(self,image,name):
         image = np.array(image,dtype=np.uint8)
-        plt.axis('off')
-        plt.imshow(image,cmap='gray')
-        plt.savefig('./static/imgs/filtered_img.jpg',format='jpg',bbox_inches='tight',pad_inches = 0)
+        cv2.imwrite(f'./static/imgs/{name}.jpg',image)
     def padding(self,image):
         padded_image = np.zeros((image.shape[0]+2,image.shape[1]+2))
         padded_image[1:image.shape[0]+1,1:image.shape[1]+1]=image 
@@ -38,15 +73,15 @@ class Functions:
         new_img = signal.convolve2d(image,kernel,mode='same',boundary='fill',fillvalue=0)
         return new_img
     def low_high_pass(self,image,selection='low',mask_size=20):
-        x = 256-mask_size
-        y = 256+mask_size
+        x = image.shape[0]//2-mask_size
+        y = image.shape[1]//2+mask_size
         img_fou = np.fft.fft2(image)
         img_fou = np.fft.fftshift(img_fou)
         if selection == "high":
-            mask = np.ones((512,512))
+            mask = np.ones((image.shape[0],image.shape[1]))
             mask[x:y,x:y] = 0
         elif selection == "low":
-            mask = np.zeros((512,512))
+            mask = np.zeros((image.shape[0],image.shape[1]))
             mask[x:y,x:y] = 1
         new_fou = mask*img_fou
         new_fou = np.fft.ifftshift(new_fou)

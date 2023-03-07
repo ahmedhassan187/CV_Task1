@@ -26,19 +26,19 @@ def filter():
         # print(img.shape)
         if filtertype == "gaussian-filter":
             new_img = Functions.gaussian_filter(Functions,img,int(kernal),1)
-            Functions.display_image(Functions,new_img)
+            Functions.display_image(Functions,new_img,'filtered_img')
         elif filtertype == "avg-filter":
             new_img = Functions.average_filter(Functions,image_data=img,filter_size=int(kernal))
-            Functions.display_image(Functions,new_img)
+            Functions.display_image(Functions,new_img,'filtered_img')
         elif filtertype == "mad-filter":
             new_img = Functions.median_filter(Functions,img,int(kernal))
-            Functions.display_image(Functions,new_img)
+            Functions.display_image(Functions,new_img,'filtered_img')
         elif filtertype == "hp-filter":
             new_img = Functions.low_high_pass(Functions,img,'high',int(raduis))
-            Functions.display_image(Functions,new_img)
+            Functions.display_image(Functions,new_img,'filtered_img')
         elif filtertype == "lp-filter":
             new_img = Functions.low_high_pass(Functions,img,'low',int(raduis))
-            Functions.display_image(Functions,new_img)
+            Functions.display_image(Functions,new_img,'filtered_img')
         print(filtertype)
         print(kernal)
         print(raduis)        
@@ -51,6 +51,16 @@ def noise():
     if request.method == 'POST':
         noiseType = request.json['type']
         print(noiseType)
+        img = cv2.imread("./static/imgs/original_img.jpg",cv2.IMREAD_GRAYSCALE)
+        if noiseType == "uniform-noise":
+            new_img = Functions.noisy('uniform',img)
+            Functions.display_image(Functions,new_img,'original_img')
+        elif noiseType == "gaussian-noise":
+            new_img = Functions.noisy('gaussian',img)
+            Functions.display_image(Functions,new_img,'original_img')
+        elif noiseType == "sp-noise":
+            new_img = Functions.noisy('s&p',img)
+            Functions.display_image(Functions,new_img,'original_img')
         return render_template("main.html")
     else:
         return render_template("main.html")
