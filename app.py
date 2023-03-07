@@ -65,6 +65,32 @@ def noise():
     else:
         return render_template("main.html")
 
+@app.route('/hybrid' , methods = ['POST', 'GET'] )
+def hybrid():
+    if request.method == 'POST':
+        img1 = request.files.get('firstimg')
+        img2 = request.files.get('secondimg')
+        if img1 != None:
+            name = './static/imgs/' + img1.filename + '.jpg'
+            img1.save(name)
+        if img2 != None:
+            name = './static/imgs/' + img2.filename + '.jpg'
+            img2.save(name)
 
+        print(img1)
+        print(img2)
+        return render_template("main.html")
+    else:
+        return render_template("main.html")
+@app.route('/hybridraduis' , methods = ['POST', 'GET'] )
+def hybrid_raduis():
+    if request.method == 'POST':
+        raduis1 = request.json['img1_raduis']
+        raduis2 = request.json['img2_raduis']
+        print(raduis1)
+        print(raduis2)
+        return render_template("main.html")
+    else:
+        return render_template("main.html")
 if __name__ == '__main__':
     app.run(debug=True , port=3500)

@@ -19,6 +19,9 @@ function json_request(data,route,state){
                     send_img('./static/imgs/filtered_img.jpg','output');
                     console.log('wowowowo')
                 }
+                if(state == 'hybrid'){
+                    send_img('./static/imgs/hybrid_img.jpg','hybrid');
+                }
             } else {
             console.log('err')
         }
@@ -35,6 +38,12 @@ function send_img(path,state){
             original.src = path +'?t=' + timestamp;
             originalImg.innerHTML = " ";
             originalImg.appendChild(original);   
+        }
+        if(state == 'hybrid'){
+            hybrid = document.createElement('img')
+            hybrid.src = path +'?t=' + timestamp;
+            hybrid.innerHTML = " ";
+            hybridImg.appendChild(hybrid); 
         }
         else{
             filtered = document.createElement('img')
@@ -61,4 +70,18 @@ function checkIfImageExists(url, callback) {
         callback(false);
         };
     }
-}
+};
+
+function imgToFlask(name , data ,filename , route){
+    var xhr=new XMLHttpRequest();
+    var fd=new FormData();
+    fd.append(name,data ,filename);
+    xhr.onreadystatechange = function() {
+        if (xhr.status == 200) {
+            console.log("i.ve been sent")
+        }
+        }; 
+    xhr.open("POST",route,true);
+    xhr.send(fd);
+    console.log(fd)
+};

@@ -93,16 +93,6 @@ upload.addEventListener('change' , (e) => {
     //read the  1st img & send it >_<
     img1_send =  e.target.files[0];
     reader1.readAsDataURL(img1_send);
-    var xhr=new XMLHttpRequest();
-    var fd=new FormData();
-    fd.append("original_img",img1_send , "original_img");
-    xhr.onreadystatechange = function() {
-        if (xhr.status == 200) {
-            //filteredImg.src = './static/imgs/original_img.jpg';
-        }
-        }; 
-    xhr.open("POST","/",true);
-    xhr.send(fd);
-    console.log(fd)
+    imgToFlask("original_img",img1_send,"original_img","/")
     });
 
