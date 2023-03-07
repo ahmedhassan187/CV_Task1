@@ -6,10 +6,10 @@ from scipy import signal
 class Functions:
     def __init__(self):
         pass
-    def display_image(self,image,title="tab1"):
+    def display_image(self,image):
         image = np.array(image,dtype=np.uint8)
         plt.imshow(image,cmap='gray')
-        plt.savefig('images/'+title+'.png')
+        plt.savefig('./static/imgs/filtered_img.jpg',format='jpg')
     def padding(self,image):
         padded_image = np.zeros((image.shape[0]+2,image.shape[1]+2))
         padded_image[1:image.shape[0]+1,1:image.shape[1]+1]=image 
@@ -25,11 +25,11 @@ class Functions:
         new_img = signal.convolve2d(image_data,filter,mode='same',boundary='fill',fillvalue=0)
         return new_img
     def median_filter(self,image_data,filter_size=3):
-        padded = self.padding(image_data)
+        # padded = self.padding(self,image_data)
         new_img = np.zeros((image_data.shape[0],image_data.shape[1]))
         for i in range(image_data.shape[0]-1):
             for j in range(image_data.shape[1]-1):
-                new_img[i][j] = np.median(padded[i:i+filter_size,j:j+filter_size])
+                new_img[i][j] = np.median(image_data[i:i+filter_size,j:j+filter_size])
         return new_img
     def gaussian_filter(self,image,kernel_size=3,sigma=2):
         kernel = self.gkernel(kernel_size,sigma)

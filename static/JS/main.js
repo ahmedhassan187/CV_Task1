@@ -28,6 +28,8 @@ document.addEventListener("click", (e)=>{
         e.target.classList.add("active-filter")
         filterType =e.target.classList[1]
         json_request(filterType,'/filter')
+        filteredImg.src = '/static/imgs/filtered_img.jpg';
+        console.log(filteredImg.src)
         if(e.target.classList.contains("kernal")){
             kernalSizeBox.style.display = "flex"
             radiusBox.style.display = "none"
@@ -84,7 +86,7 @@ upload.addEventListener('change' , (e) => {
     fd.append("original_img",img1_send , "original_img");
     xhr.onreadystatechange = function() {
         if (xhr.status == 200) {
-            //filteredImg.src = '/static/imgs/filtered_img.jpg';
+            // filteredImg.src = './static/imgs/filtered_img.jpg';
             console.log('ya booooody');
         }
         }; 

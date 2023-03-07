@@ -1,6 +1,7 @@
 from flask import Flask, render_template , request , jsonify , json
-
-
+from functions import Functions
+import numpy as np
+import cv2
 app = Flask(__name__)
 @app.route('/' , methods = ['POST', 'GET'] )
 def main():
@@ -8,6 +9,7 @@ def main():
         img = request.files.get('original_img')
         name = './static/imgs/' + img.filename + '.jpg'
         img.save(name)
+        
         print(img)
         return render_template("main.html")
     else:
@@ -18,6 +20,17 @@ def main():
 def filter():
     if request.method == 'POST':
         filtertype = request.json
+        img = cv2.imread("./static/imgs/original_img.jpg",cv2.IMREAD_GRAYSCALE)
+        # print(img.shape)
+        if filtertype == "gaussian-filter":
+            new_img = Functions.gaussian_filter(Functions,img,3,1)
+            Functions.display_image(Functions,new_img)
+        elif filtertype == "avg-filter":
+            new_img = Functions.average_filter(Functions,image_data=img,filter_size=9)
+            Functions.display_image(Functions,new_img)
+        elif filtertype == "mad-filter":
+            new_img = Functions.median_filter(Functions,img,7)
+            Functions.display_image(Functions,new_img)
         print(filtertype)
         return render_template("main.html")
     else:
