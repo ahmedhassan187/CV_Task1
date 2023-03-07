@@ -27,7 +27,7 @@
             <div class="side-bar">
                 <div class="filters">
                     <form action="/filter" method="POST">
-                        <div class="filter mad-filter active-filter kernal">Madian Filter</div>
+                        <div class="filter mad-filter active-filter kernal">Median Filter</div>
                         <div class="filter gaussian-filter kernal">Gaussian Filter</div>
                         <div class="filter avg-filter kernal">Averaging Filter</div>
                         <div class="filter lp-filter radius-filter">Low-Pass Filter</div>
@@ -57,9 +57,11 @@
                     <div class="slider-title">
                         SNR
                     </div>
+                    <form action="/SNR" method="POST">
                     <div class="slider">
                         <input type="range" step="1" min="0" max="100" value="100" id="snr-slider">
                         <div class="snr-slider-value">100</div>
+                    </form>
                     </div>
                 </div>
                 <div class="upload-img">

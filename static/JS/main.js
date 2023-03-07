@@ -41,7 +41,6 @@ document.addEventListener("click", (e)=>{
     }
 
     // ################################################################################ //
-
     if(e.target.classList.contains("noise-type")){
         toggleClass(fTabNoiseTypes, "active-noise-type")
         e.target.classList.add("active-noise-type")
@@ -55,10 +54,11 @@ document.addEventListener("click", (e)=>{
 
 let snrSlider = document.getElementById("snr-slider")
 let snrSliderValue = document.querySelector(".snr-slider-value")
-
 snrSlider.addEventListener("input", (e) =>{
     snrSliderValue.innerHTML = snrSlider.value
-
+    send_snr = snrSlider.value
+    json_request(send_snr,"/SNR")
+    console.log(send_snr)
 })
 
 //############################################## upload img ############### //
