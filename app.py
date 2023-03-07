@@ -9,7 +9,7 @@ def main():
         img = request.files.get('original_img')
         name = './static/imgs/' + img.filename + '.jpg'
         img.save(name)
-        
+
         print(img)
         return render_template("main.html")
     else:
@@ -30,6 +30,12 @@ def filter():
             Functions.display_image(Functions,new_img)
         elif filtertype == "mad-filter":
             new_img = Functions.median_filter(Functions,img,7)
+            Functions.display_image(Functions,new_img)
+        elif filtertype == "hp-filter":
+            new_img = Functions.low_high_pass(Functions,img,'high',10)
+            Functions.display_image(Functions,new_img)
+        elif filtertype == "lp-filter":
+            new_img = Functions.low_high_pass(Functions,img,'low',20)
             Functions.display_image(Functions,new_img)
         print(filtertype)
         return render_template("main.html")

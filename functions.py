@@ -8,8 +8,9 @@ class Functions:
         pass
     def display_image(self,image):
         image = np.array(image,dtype=np.uint8)
+        plt.axis('off')
         plt.imshow(image,cmap='gray')
-        plt.savefig('./static/imgs/filtered_img.jpg',format='jpg')
+        plt.savefig('./static/imgs/filtered_img.jpg',format='jpg',bbox_inches='tight',pad_inches = 0)
     def padding(self,image):
         padded_image = np.zeros((image.shape[0]+2,image.shape[1]+2))
         padded_image[1:image.shape[0]+1,1:image.shape[1]+1]=image 
@@ -36,7 +37,7 @@ class Functions:
         new_img = np.zeros((image.shape[0],image.shape[1]))
         new_img = signal.convolve2d(image,kernel,mode='same',boundary='fill',fillvalue=0)
         return new_img
-    def low_high_pass(image,selection='low',mask_size=20):
+    def low_high_pass(self,image,selection='low',mask_size=20):
         x = 256-mask_size
         y = 256+mask_size
         img_fou = np.fft.fft2(image)
