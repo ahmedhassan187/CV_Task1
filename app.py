@@ -22,23 +22,22 @@ def filter():
         filtertype = request.json['type']
         kernal = request.json['kernalsize']
         raduis= request.json['raduissize']
-
         img = cv2.imread("./static/imgs/original_img.jpg",cv2.IMREAD_GRAYSCALE)
         # print(img.shape)
         if filtertype == "gaussian-filter":
-            new_img = Functions.gaussian_filter(Functions,img,3,1)
+            new_img = Functions.gaussian_filter(Functions,img,int(kernal),1)
             Functions.display_image(Functions,new_img)
         elif filtertype == "avg-filter":
-            new_img = Functions.average_filter(Functions,image_data=img,filter_size=9)
+            new_img = Functions.average_filter(Functions,image_data=img,filter_size=int(kernal))
             Functions.display_image(Functions,new_img)
         elif filtertype == "mad-filter":
-            new_img = Functions.median_filter(Functions,img,7)
+            new_img = Functions.median_filter(Functions,img,int(kernal))
             Functions.display_image(Functions,new_img)
         elif filtertype == "hp-filter":
-            new_img = Functions.low_high_pass(Functions,img,'high',10)
+            new_img = Functions.low_high_pass(Functions,img,'high',int(raduis))
             Functions.display_image(Functions,new_img)
         elif filtertype == "lp-filter":
-            new_img = Functions.low_high_pass(Functions,img,'low',20)
+            new_img = Functions.low_high_pass(Functions,img,'low',int(raduis))
             Functions.display_image(Functions,new_img)
         print(filtertype)
         print(kernal)
