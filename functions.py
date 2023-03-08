@@ -170,8 +170,8 @@ class Functions:
 
     #function to do sobel, roberts, prewitt and canny edge detection
     def edge_detection(self,image,method):
-        image = self.rgb2gray(image)
-        image = self.padding(image)
+        #image = self.rgb2gray(Functions,image)
+        image = self.padding(Functions,image)
 
         if method == "sobel":
             Gx = np.array([[-1,0,1],[-2,0,2],[-1,0,1]])
@@ -179,7 +179,7 @@ class Functions:
 
 
         elif method == "canny":
-            return self.canny_edge(image)
+            return self.canny_edge(Functions,image)
 
        
         elif method == "roberts":
@@ -197,37 +197,35 @@ class Functions:
                 Gy_value = np.sum((image[i-1:i+2,j-1:j+2]*Gy))
                 new_image[i][j] = np.sqrt(Gx_value**2+Gy_value**2)
 
-
-        
         return new_image
  
     def canny_edge(self,image, minVal=.1,maxVal=.15):
         # impelementing canny edge detection
-        image = self.rgb2gray(image)
-        image = self.gaussian_filter(image,1)
-        image = self.padding(image)
-        gx,gy = self.SobelFilter(image)
+        #image = self.rgb2gray(Functions,image)
+        image = self.gaussian_filter(Functions,image,1)
+        image = self.padding(Functions,image)
+        gx,gy = self.SobelFilter(Functions,image)
         Mag = np.hypot(gx,gy)
 
-        NMS = self.non_max_suppression(Mag)
-        image = self.hysteresis(self.Normalize(NMS),minVal,maxVal)
+        NMS = self.non_max_suppression(Functions,Mag)
+        image = self.hysteresis(self.Normalize(Functions,NMS),minVal,maxVal)
         return image
 
     def SobelFilter(self,img):
         Gx = np.array([[-1,0,+1], [-2,0,+2],  [-1,0,+1]])
-        Res_x = ndimage.convolve(img, Gx)
+        Res_x = ndimage.convolve(Functions,img, Gx)
 
         Gy = np.array([[-1,-2,-1], [0,0,0], [+1,+2,+1]])
-        Res_y = ndimage.convolve(img, Gy)
+        Res_y = ndimage.convolve(Functions,img, Gy)
 
-        return self.Normalize(Res_x), self.Normalize(Res_y)
+        return self.Normalize(Functions,Res_x), self.Normalize(Functions,Res_y)
     def Normalize(self,img):
         img = img/np.max(img)
         return img
 
     def non_max_suppression(self,image):
         # non max suppression
-        image = self.padding(image)
+        image = self.padding(Functions,image)
         for i in range(1,image.shape[0]-1):
             for j in range(1,image.shape[1]-1):
                 if image[i,j] == 0:
