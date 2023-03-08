@@ -20,6 +20,7 @@
             <div class="tab tab1 active-tab">Tab 1</div>
             <div class="tab tab2">Tab 2</div>
             <div class="tab tab3">Tab 3</div>
+            <div class="tab tab4">Tab 4</div>
         </div>
     </div>
     <div class="tab-body TB1">
@@ -60,9 +61,9 @@
                 </div>
             </div>
             <div class="imgs">
-                <div class="img original-img">
+                <div class="img original-img double-img">
                 </div>
-                <div class="img filtered-img">
+                <div class="img filtered-img double-img">
 
                 </div>   
             </div>
@@ -124,10 +125,34 @@
         </div>
         </div>
     </div>
+    <div class="tab-body TB4">
+        <div class="container">
+            <div class="side-bar">
+                <div class="upload-img">
+                    <input type="file" id="upload" class="upload">
+                </div>
+                <div class="edge-detection-types">
+                    <div class="noise-title">
+                        <div class="title">Edge detection Types</div>
+                    </div>
+                    <form action="/edtype" method="POST">
+                        <div class="edge-detection-type sobel active-edge-detection">Sobel Edge Detection</div>
+                        <div class="edge-detection-type lp-filter ">Canny Edge Detection</div>
+                        <div class="edge-detection-type gaussian-filter ">Roberts Edge Detection</div>
+                        <div class="edge-detection-type avg-filter ">Prewitt Edge Detection</div>
+                    </form>
+                </div>
+            </div>
+            <div class="imgs">
+                <div class="img original-img tb4-original-filter double-img"></div>
+                <div class="img filtered-img tb4-selected-filter double-img"></div>
+            </div> 
+    </div>
 </body>
 <script src="/static/JS/firstTab.js"></script>
 <script src="/static/JS/secondTab.js"></script>
 <script src="/static/JS/thirdTab.js"></script>
+<script src="/static/JS/fourthTab.js"></script>
 <script src="/static/JS/functions.js"></script>
 <script src="/static/JS/all.min.js"></script>
 </html>

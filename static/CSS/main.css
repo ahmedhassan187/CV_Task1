@@ -93,7 +93,8 @@ body{
 
 .filters,
 .noise-types,
-.modes{
+.modes,
+.edge-detection-types{
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
@@ -126,7 +127,8 @@ width: 40%;
 
 .side-bar .filter,
 .noise-type,
-.mode{
+.mode,
+.edge-detection-type{
     width: 100%;
     height: 5vh;
     color: var(--unslected-font-color);
@@ -141,7 +143,8 @@ width: 40%;
 
 .side-bar .filter.active-filter,
 .active-noise-type,
-.active-mode{
+.active-mode,
+.active-edge-detection{
     color: white;
     background-color: var(--Mid-color);
 }
@@ -158,7 +161,6 @@ width: 40%;
 
 .noise-title{
     width: 100%;
-    height: 25%;
     padding: 5px 0;
     box-sizing: border-box;
     display: flex;
@@ -295,4 +297,18 @@ img{
     width: 100%;
     height: 95%;
     border-radius: var(--border-rad);
+}
+
+.TB4 .side-bar{
+    justify-content: unset;
+}
+
+.edge-detection-types{
+    margin-top: 40px;
+}
+
+.double-img{
+    width: 49.5%;
+    height: 100%;
+    background-color: var(--Dark-color);
 }
