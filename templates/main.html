@@ -25,6 +25,9 @@
     <div class="tab-body TB1">
         <div class="container">
             <div class="side-bar">
+                <div class="upload-img">
+                    <input type="file" id="upload" class="upload">
+                </div>
                 <div class="filters">
                     <form action="/filter" method="POST">
                         <div class="filter mad-filter active-filter kernal">Median Filter</div>
@@ -55,9 +58,6 @@
                         </form>
                     </div>
                 </div>
-                <div class="upload-img">
-                    <input type="file" id="upload" class="upload">
-                </div>
             </div>
             <div class="imgs">
                 <div class="img original-img">
@@ -70,20 +70,23 @@
     </div>
     <div class="tab-body TB2">
         <div class="container">
-            <div class="upload-img">
-                <input type="file" id="upload-histogram" class="upload-hybrid1">
+                <div class="side-bar">
+                <div class="upload-img">
+                    <input type="file" id="upload-histogram" class="upload-hybrid1">
+                </div>
+                <div class="modes">
+                    <div class="show-gray mode active-mode" id="gray">Gray</div>
+                    <div class="show-rgb mode" id="rgb">RGB</div>
+                </div>
             </div>
-                <div class="show-gray" id="gray">Gray</div>
-                <div class="show-rgb" id="rgb">RGB</div>
         <div class="imgs-tab2">
-            <div class="img input-img"style="width:100px; height:100px;"> 
+            <div class="tb2-first-raw tb2-raw">
+                <div class="img input-img"></div>
+                <div class="img output-img"></div>
             </div>
-            <div class="img output-img" style="width:100px; height:100px;">
-                
-            </div>
-            <div class="img input-hist" style="width:100px; height:100px;">
-            </div>
-            <div class="img output-hist" style="width:100px; height:100px;">
+            <div class="tb2-second-raw tb2-raw">
+                <div class="img input-hist"></div>
+                <div class="img output-hist"></div>
             </div>
         </div>
         </div>

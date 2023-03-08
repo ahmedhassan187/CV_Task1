@@ -3,6 +3,8 @@ let inputImg = document.querySelector(".input-img")
 let outputImg = document.querySelector(".output-img")
 let inputHist = document.querySelector('.input-hist')
 let outputHist = document.querySelector('.output-hist')
+let colorMode = document.getElementsByClassName("mode")
+
 
 //############### Read the input img ###################//
 
@@ -41,3 +43,9 @@ document.getElementById('rgb').addEventListener('click',(e)=>{
     RGB_Gray('./static/imgs/RGB_histogram.jpg',inputHist)
     RGB_Gray('./static/imgs/RGB_histogram_equalized.jpg',outputHist)
 })
+
+document.addEventListener("click", (e)=>{
+    if(e.target.classList.contains("mode")){
+        toggleClass(colorMode, "active-mode")
+        e.target.classList.add("active-mode") }
+    })
