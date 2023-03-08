@@ -116,7 +116,6 @@ class Functions:
         for x in range(0,img_height):
             for y in range(0,img_width):
                 hist[image[x,y]] +=1
-        np.savetxt("./saved_text/gray scale histogram.txt",hist)
         return hist
     # plotting the gray scale histogram *distributive* 
     def Gray_histogram_Plot(self,histogram,path):
