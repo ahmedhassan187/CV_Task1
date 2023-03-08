@@ -39,23 +39,30 @@ function send_img(path,state){
             originalImg.innerHTML = " ";
             originalImg.appendChild(original);   
         }
-        if(state == 'hybrid'){
-            hybrid = document.createElement('img')
-            hybrid.src = path +'?t=' + timestamp;
-            hybrid.innerHTML = " ";
-            hybridImg.appendChild(hybrid); 
-        }
-        else{
+        if(state == 'output'){
             filtered = document.createElement('img')
             filtered.src = path +'?t=' + timestamp;
             filteredImg.innerHTML = " ";
             filteredImg.appendChild(filtered);      
             }
+        if(state == 'hybrid'){
+            hybrid = document.createElement('img')
+            hybrid.src = path +'?t=' + timestamp;
+            hybridImg.innerHTML = " ";
+            hybridImg.appendChild(hybrid); 
+        }
+        if(state == 'histogram'){
+            histogram = document.createElement('img')
+            histogram.src = path +'?t=' + timestamp;
+            outputImg.innerHTML = " ";
+            outputImg.appendChild(histogram); 
+        }
     } else {
         console.log('Image does not exists.')
     }
 });
 }
+
 function checkIfImageExists(url, callback) {
     const img = new Image();
     img.src = url;
@@ -78,10 +85,25 @@ function imgToFlask(name , data ,filename , route){
     fd.append(name,data ,filename);
     xhr.onreadystatechange = function() {
         if (xhr.status == 200) {
-            console.log("i.ve been sent")
+            if(route == "/histogram"){
+                send_img('./static/imgs/equalized_img.jpg','histogram');    
+                RGB_Gray('./static/imgs/RGB_histogram.jpg',inputHist)
+                RGB_Gray('./static/imgs/RGB_histogram_equalized.jpg',outputHist)
+                console.log('Da histon!!!')
+            }
+            else{
+                console.log("i've been sent")
+            }
         }
         }; 
     xhr.open("POST",route,true);
     xhr.send(fd);
     console.log(fd)
 };
+function RGB_Gray(path,div){
+    var timestamp = new Date().getTime();
+    img = document.createElement('img')
+    img.src = path +'?t=' + timestamp;
+    div.innerHTML = " ";
+    div.appendChild(img); 
+}

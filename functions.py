@@ -100,14 +100,14 @@ class Functions:
         image2 = self.low_high_pass(image2,'high',r2)
         new_image = image1+image2
         return new_image
-    def rgb_histogram(image): #cumulative
+    def cumulative_histogram(image): #cumulative
         r = image[:,:,0]
         g = image[:,:,1]
         b = image[:,:,2]
         plt.hist(r.ravel(),256,[0,256],color='r')
         plt.hist(g.ravel(),256,[0,256],color='g')
         plt.hist(b.ravel(),256,[0,256],color='b')
-        plt.show()
+        return plt.savefig('./static/imgs/cumulative_histogram.jpg')
     # Function to compute gray level histogram *distributive*
     def Gray_histogram_Compute(self,image):
         img_height = image.shape[0]
@@ -119,14 +119,14 @@ class Functions:
         np.savetxt("./saved_text/gray scale histogram.txt",hist)
         return hist
     # plotting the gray scale histogram *distributive* 
-    def Gray_histogram_Plot(self,histogram):
+    def Gray_histogram_Plot(self,histogram,path):
         plt.figure()
         plt.title("Histogram Distribution Curve")
         plt.xlabel("Brightness")
         plt.ylabel("number of Pixels")
         plt.xlim([0,256]) # As gray scale levels vary from 0 -> 256
         plt.plot(histogram,'gray')
-        plt.savefig("./saved_imgs/Gray_hisogram.jpg")
+        plt.savefig(path)
         return "Success"
     # histogram for RGB *distributive*
     def RGB_histogram(self,image):
@@ -140,7 +140,7 @@ class Functions:
                         histogram[image[x,y,c], c] +=1
         return histogram
     #Plot the distributive RGB histogram each in separate plot
-    def Plot_RGBHistogram(self,RGB_Histogram):
+    def Plot_RGBHistogram(self,RGB_Histogram,path):
         # Separate Histograms for each color
         plt.subplot(3, 1, 1)
         plt.xlim([0, 256])
@@ -159,7 +159,7 @@ class Functions:
         plt.plot(RGB_Histogram[:,2],'r')
         # for clear view
         plt.tight_layout()
-        plt.savefig("./saved_imgs/RGB_histogram.jpg")
+        plt.savefig(path)
         return "success"
     # function to normalize the image
     def img_normalization(self,img):
@@ -265,7 +265,7 @@ class Functions:
 
 
     # function to equalize the image
-    def img_equalize(self,image):
+    def img_equalize(self,img):
         '''
         parameters:
         image: input image
@@ -273,12 +273,12 @@ class Functions:
         img2: equalized image
         
         '''
-        image = self.rgb2gray(image)
-        hist = self.histogram_Compute(image)
+        #image_1 = self.rgb2gray(self,img)
+        hist = self.Gray_histogram_Compute(Functions,img)
         cdf = hist.cumsum()
         cdf_normalized = cdf * hist.max()/ cdf.max()
         cdf_m = np.ma.masked_equal(cdf,0)
         cdf_m = (cdf_m - cdf_m.min())*255/(cdf_m.max()-cdf_m.min())
         cdf = np.ma.filled(cdf_m,0).astype('uint8')
-        img2 = cdf[image]
+        img2 = cdf[img]
         return img2

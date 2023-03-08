@@ -99,5 +99,27 @@ def hybrid_raduis():
         return render_template("main.html")
     else:
         return render_template("main.html")
+@app.route('/histogram' , methods = ['POST', 'GET'] )
+def histogram():
+    if request.method == 'POST':
+        img = request.files.get('inputimg')
+        if img != None:
+            name = './static/imgs/' + img.filename + '.jpg'
+            img.save(name)
+        print(img)
+        read_img = cv2.imread('./static/imgs/inputimg.jpg')
+        RGB_hist = Functions.RGB_histogram(Functions,read_img)
+        Functions.Plot_RGBHistogram(Functions,RGB_hist,"./static/imgs/RGB_histogram.jpg")
+        Gray_hist =Functions.Gray_histogram_Compute(Functions,read_img)
+        Functions.Gray_histogram_Plot(Functions,Gray_hist,"./static/imgs/Gray_histogram.jpg")
+        equalizedImg = Functions.img_equalize(Functions,read_img)
+        Functions.display_image(Functions,equalizedImg,'equalized_img')
+        RGB_equalized = Functions.RGB_histogram(Functions,equalizedImg)
+        Functions.Plot_RGBHistogram(Functions,RGB_equalized,"./static/imgs/RGB_histogram_equalized.jpg")
+        Gray_equalized =Functions.Gray_histogram_Compute(Functions,equalizedImg)
+        Functions.Gray_histogram_Plot(Functions,Gray_equalized,"./static/imgs/Gray_histogram_equalized.jpg")
+        return render_template("main.html")
+    else:
+        return render_template("main.html")
 if __name__ == '__main__':
     app.run(debug=True , port=3500)

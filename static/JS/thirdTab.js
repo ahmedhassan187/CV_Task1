@@ -42,7 +42,7 @@ hybrid2.addEventListener('change' , (e) => {
         secondImg.appendChild(img);
     }
     };
-    //read the  1st img & send it >_<
+    //read the  2nd img & send it >_<
     hybrid2_send =  e.target.files[0];
     reader3.readAsDataURL(hybrid2_send);
     imgToFlask("secondimg",hybrid2_send,"secondimg","/hybrid")
@@ -59,5 +59,4 @@ document.getElementById('hybrid').addEventListener('click',(e) =>{
         img2_raduis : raduis3_value
     };
     json_request(values,'/hybridraduis','hybrid')
-    console.log('whwhwhw')
 })
