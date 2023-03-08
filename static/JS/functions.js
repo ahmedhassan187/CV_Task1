@@ -22,6 +22,9 @@ function json_request(data,route,state){
                 if(state == 'hybrid'){
                     send_img('./static/imgs/hybrid_img.jpg','hybrid');
                 }
+                if(state == 'edge'){
+                    send_img('./static/imgs/outputedge.jpg','edge')
+                }
             } else {
             console.log('err')
         }
@@ -56,6 +59,13 @@ function send_img(path,state){
             histogram.src = path +'?t=' + timestamp;
             outputImg.innerHTML = " ";
             outputImg.appendChild(histogram); 
+        }
+        if(state == 'edge'){
+            edge = document.createElement('img')
+            edge.src = path +'?t=' + timestamp;
+            outputEdge.innerHTML = " ";
+            outputEdge.appendChild(edge);
+
         }
     } else {
         console.log('Image does not exists.')

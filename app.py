@@ -121,5 +121,28 @@ def histogram():
         return render_template("main.html")
     else:
         return render_template("main.html")
+
+@app.route('/edge' , methods = ['POST', 'GET'] )
+def edge():
+    if request.method == 'POST':
+        img = request.files.get('inputedge')
+        if img != None:
+            name = './static/imgs/' + img.filename + '.jpg'
+            img.save(name)
+        print(img)
+        read_img = cv2.imread('./static/imgs/inputedge.jpg')
+
+        return render_template("main.html")
+    else:
+        return render_template("main.html")
+@app.route('/edgetype' , methods = ['POST', 'GET'] )
+def edgetype():
+    if request.method == 'POST':
+        type = request.json
+        print(type)
+        ### hna apply el edge ya hassan save img as outputedge.jpg >_<
+        return render_template("main.html")
+    else:
+        return render_template("main.html")
 if __name__ == '__main__':
     app.run(debug=True , port=3500)

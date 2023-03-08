@@ -76,7 +76,7 @@
                     <input type="file" id="upload-histogram" class="upload-hybrid1">
                 </div>
                 <div class="modes">
-                    <div class="show-gray mode" id="gray">Gray</div>
+                    <div class="show-gray mode active-mode" id="gray">Gray</div>
                     <div class="show-rgb mode" id="rgb">RGB</div>
                 </div>
             </div>
@@ -129,7 +129,7 @@
         <div class="container">
             <div class="side-bar">
                 <div class="upload-img">
-                    <input type="file" id="upload" class="upload">
+                    <input type="file" id="upload-edge" class="upload" >
                 </div>
                 <div class="edge-detection-types">
                     <div class="noise-title">
@@ -137,9 +137,9 @@
                     </div>
                     <form action="/edtype" method="POST">
                         <div class="edge-detection-type sobel active-edge-detection">Sobel Edge Detection</div>
-                        <div class="edge-detection-type lp-filter ">Canny Edge Detection</div>
-                        <div class="edge-detection-type gaussian-filter ">Roberts Edge Detection</div>
-                        <div class="edge-detection-type avg-filter ">Prewitt Edge Detection</div>
+                        <div class="edge-detection-type canny ">Canny Edge Detection</div>
+                        <div class="edge-detection-type roberts ">Roberts Edge Detection</div>
+                        <div class="edge-detection-type prewitt ">Prewitt Edge Detection</div>
                     </form>
                 </div>
             </div>
