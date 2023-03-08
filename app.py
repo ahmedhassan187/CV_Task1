@@ -139,8 +139,9 @@ def edgetype():
     if request.method == 'POST':
         type = request.json
         print(type)
-        img = cv2.imread('./static/imgs/inputedge.jpg')
-        Functions.edge_detection(Functions,img,str(type))
+        img = cv2.imread('./static/imgs/inputedge.jpg',cv2.IMREAD_GRAYSCALE)
+        new_img = Functions.edge_detection(Functions,img,str(type))
+        Functions.display_image(Functions,new_img,"outputedge")
         ### hna apply el edge ya hassan save img as outputedge.jpg >_<
         return render_template("main.html")
     else:

@@ -69,7 +69,7 @@ class Functions:
                 new_img[i][j] = np.median(image_data[i:i+filter_size,j:j+filter_size])
         return new_img
     def gaussian_filter(self,image,kernel_size=3,sigma=2):
-        kernel = self.gkernel(kernel_size,sigma)
+        kernel = self.gkernel(self,kernel_size,sigma)
         new_img = np.zeros((image.shape[0],image.shape[1]))
         new_img = signal.convolve2d(image,kernel,mode='same',boundary='fill',fillvalue=0)
         return new_img
@@ -170,8 +170,8 @@ class Functions:
 
     #function to do sobel, roberts, prewitt and canny edge detection
     def edge_detection(self,image,method):
-        #image = self.rgb2gray(Functions,image)
-        image = self.padding(Functions,image)
+        # image = self.rgb2gray(image)
+        image = self.padding(self,image)
 
         if method == "sobel":
             Gx = np.array([[-1,0,1],[-2,0,2],[-1,0,1]])
@@ -179,7 +179,7 @@ class Functions:
 
 
         elif method == "canny":
-            return self.canny_edge(Functions,image)
+            return self.canny_edge(self,image)
 
        
         elif method == "roberts":
@@ -191,41 +191,50 @@ class Functions:
             Gy = np.array([[-1,-1,-1],[0,0,0],[1,1,1]])
 
         new_image = np.zeros((image.shape[0],image.shape[1]))
-        for i in range(1,image.shape[0]-1):
-            for j in range(1,image.shape[1]-1):
-                Gx_value = np.sum((image[i-1:i+2,j-1:j+2]*Gx))
-                Gy_value = np.sum((image[i-1:i+2,j-1:j+2]*Gy))
-                new_image[i][j] = np.sqrt(Gx_value**2+Gy_value**2)
+        if method == "roberts":
+            for i in range(1,image.shape[0]-1):
+                for j in range(1,image.shape[1]-1):
+                    Gx_value = np.sum((image[i-1:i+1,j-1:j+1]*Gx))
+                    Gy_value = np.sum((image[i-1:i+1,j-1:j+1]*Gy))
+                    new_image[i][j] = np.sqrt(Gx_value**2+Gy_value**2)
+        else:   
+            for i in range(1,image.shape[0]-1):
+                for j in range(1,image.shape[1]-1):
+                    Gx_value = np.sum((image[i-1:i+2,j-1:j+2]*Gx))
+                    Gy_value = np.sum((image[i-1:i+2,j-1:j+2]*Gy))
+                    new_image[i][j] = np.sqrt(Gx_value**2+Gy_value**2)
 
+
+        
         return new_image
  
     def canny_edge(self,image, minVal=.1,maxVal=.15):
         # impelementing canny edge detection
-        #image = self.rgb2gray(Functions,image)
-        image = self.gaussian_filter(Functions,image,1)
-        image = self.padding(Functions,image)
-        gx,gy = self.SobelFilter(Functions,image)
+        # image = self.rgb2gray(image)
+        image = self.gaussian_filter(self,image,3,1)
+        image = self.padding(self,image)
+        gx,gy = self.SobelFilter(self,image)
         Mag = np.hypot(gx,gy)
 
-        NMS = self.non_max_suppression(Functions,Mag)
-        image = self.hysteresis(self.Normalize(Functions,NMS),minVal,maxVal)
+        NMS = self.non_max_suppression(self,Mag)
+        image = self.hysteresis(self,self.Normalize(self,NMS),minVal,maxVal)
         return image
 
     def SobelFilter(self,img):
         Gx = np.array([[-1,0,+1], [-2,0,+2],  [-1,0,+1]])
-        Res_x = ndimage.convolve(Functions,img, Gx)
+        Res_x = ndimage.convolve(img, Gx)
 
         Gy = np.array([[-1,-2,-1], [0,0,0], [+1,+2,+1]])
-        Res_y = ndimage.convolve(Functions,img, Gy)
+        Res_y = ndimage.convolve(img, Gy)
 
-        return self.Normalize(Functions,Res_x), self.Normalize(Functions,Res_y)
+        return self.Normalize(self,Res_x), self.Normalize(self,Res_y)
     def Normalize(self,img):
         img = img/np.max(img)
         return img
 
     def non_max_suppression(self,image):
         # non max suppression
-        image = self.padding(Functions,image)
+        image = self.padding(self,image)
         for i in range(1,image.shape[0]-1):
             for j in range(1,image.shape[1]-1):
                 if image[i,j] == 0:
@@ -247,7 +256,7 @@ class Functions:
 
     def hysteresis(self,image,minVal=0.3,maxVal=.32):
         # hysteresis thresholding
-        image = self.padding(image)
+        image = self.padding(self,image)
         image[image > maxVal] = 255
         image[image < minVal] = 0
         for i in range(1,image.shape[0]-1):
