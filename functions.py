@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import cv2
-import os
+
 import random
 from scipy import ndimage
 from scipy import signal
@@ -100,14 +100,6 @@ class Functions:
         image2 = self.low_high_pass(image2,'high',r2)
         new_image = image1+image2
         return new_image
-    def cumulative_histogram(image): #cumulative
-        r = image[:,:,0]
-        g = image[:,:,1]
-        b = image[:,:,2]
-        plt.hist(r.ravel(),256,[0,256],color='r')
-        plt.hist(g.ravel(),256,[0,256],color='g')
-        plt.hist(b.ravel(),256,[0,256],color='b')
-        return plt.savefig('./static/imgs/cumulative_histogram.jpg')
     # Function to compute gray level histogram *distributive*
     def Gray_histogram_Compute(self,image):
         img_height = image.shape[0]
