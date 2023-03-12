@@ -25,6 +25,9 @@ function json_request(data,route,state){
                 if(state == 'edge'){
                     send_img('./static/imgs/outputedge.jpg','edge')
                 }
+                if(state == 'threshold'){
+                    send_img('./static/imgs/threshold.jpg','edge')
+                }
             } else {
             console.log('err')
         }
@@ -63,6 +66,13 @@ function send_img(path,state){
         if(state == 'edge'){
             edge = document.createElement('img')
             edge.src = path +'?t=' + timestamp;
+            outputEdge.innerHTML = " ";
+            outputEdge.appendChild(edge);
+
+        }
+        if(state == 'threshold'){
+            thresh = document.createElement('img')
+            thresh.src = path +'?t=' + timestamp;
             outputEdge.innerHTML = " ";
             outputEdge.appendChild(edge);
 

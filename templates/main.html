@@ -135,11 +135,19 @@
                     <div class="noise-title">
                         <div class="title">Edge detection Types</div>
                     </div>
-                    <form action="/edtype" method="POST">
+                    <form action="/edgetype" method="POST">
                         <div class="edge-detection-type sobel active-edge-detection">Sobel Edge Detection</div>
                         <div class="edge-detection-type canny ">Canny Edge Detection</div>
                         <div class="edge-detection-type roberts ">Roberts Edge Detection</div>
                         <div class="edge-detection-type prewitt ">Prewitt Edge Detection</div>
+                    </form>
+                
+                    <div class="threshold-title">
+                        <div class="title">Thresholding</div>
+                    </div>
+                    <form action="/threshold" method="POST">
+                        <div class="threshold-type globalthreshold active-threshold">Global Threshold</div>
+                        <div class="threshold-type localthreshold ">Local threshold</div>
                     </form>
                 </div>
             </div>

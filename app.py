@@ -145,5 +145,22 @@ def edgetype():
         return render_template("main.html")
     else:
         return render_template("main.html")
+@app.route('/threshold' , methods = ['POST', 'GET'] )
+def threshold():
+    if request.method == 'POST':
+        type = request.json
+        print(type)
+        img = cv2.imread('./static/imgs/inputedge.jpg',cv2.IMREAD_GRAYSCALE)
+        vv1 = Functions.thres_finder(Functions,img, thres=30, delta_T=1.0)
+        # threshold the image
+        if str(type) == 'localthreshold':
+            local_thresh = Functions.local_threshold(Functions,img, 7)
+            Functions.display_image(Functions,local_thresh,"threshold")
+        if str(type) == 'globalthreshold':
+            global_thresh = Functions.global_threshold(Functions,img, vv1, 255, 0)
+            Functions.display_image(Functions,global_thresh,"threshold")
+        return render_template("main.html")
+    else:
+        return render_template("main.html")
 if __name__ == '__main__':
     app.run(debug=True , port=3500)

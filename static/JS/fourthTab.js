@@ -1,4 +1,5 @@
 let EDModes = document.getElementsByClassName("edge-detection-type")
+let TModes = document.getElementsByClassName("threshold-type")
 uploadEdge = document.getElementById('upload-edge')
 let outputEdge = document.querySelector(".tb4-selected-filter")
 let inputEdge = document.querySelector(".tb4-original-filter")
@@ -10,6 +11,14 @@ document.addEventListener("click", (e)=>{
         edgetype= e.target.classList[1]
         json_request(edgetype,'/edgetype','edge')
         e.target.classList.add("active-edge-detection") }
+    })
+document.addEventListener("click", (e)=>{
+    if(e.target.classList.contains("threshold-type")){
+        toggleClass(TModes, "active-threshold")
+        threshold= e.target.classList[1]
+        json_request(threshold,'/threshold','threshold')
+        console.log(threshold)
+        e.target.classList.add("active-threshold") }
     })
 //################ upload img ##################///
 

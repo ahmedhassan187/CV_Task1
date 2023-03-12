@@ -10,6 +10,7 @@
 3. Apply histogram Equalization and view RGB & Gray histogram 
 4. apply Low & High pass filters to two images and show their [Hybrid image](https://en.wikipedia.org/wiki/Hybrid_image)
 5. apply different Edge detection methods: [Sobel](https://homepages.inf.ed.ac.uk/rbf/HIPR2/sobel.htm) , [Canny](https://homepages.inf.ed.ac.uk/rbf/HIPR2/canny.htm) , [Roberts](https://homepages.inf.ed.ac.uk/rbf/HIPR2/roberts.htm) , [Prewitt](https://homepages.inf.ed.ac.uk/rbf/HIPR2/prewitt.htm)
+6. Apply Local & Global Thresholding 
 
 ## Requirements
 ```
@@ -57,6 +58,14 @@ Back-end => Flask
 
 *another example*
 ![Preview Gif](/snaps/ex2edge.gif)
+
+### 6. Thresholding:
+
+#### Local Thresholding
+![Alt text](/snaps/localthreshold.jpg)
+
+#### Global Thresholding
+![Alt text](/snaps/globalthreshold.jpg)
 _____________________
 ### Task Submitted by 3rd year SBME2024 students 💉:
 * [Ahemd Hassan](https://github.com/ahmedhassan187) 
