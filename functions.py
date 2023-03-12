@@ -190,8 +190,9 @@ class Functions:
         image = self.padding(self, image)
 
         if method == "sobel":
-            Gx = np.array([[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]])
-            Gy = np.array([[-1, -2, -1], [0, 0, 0], [1, 2, 1]])
+            Gx, Gy = self.SobelFilter(self,image)
+            Mag = np.hypot(Gx, Gy)
+            return Mag
 
         elif method == "canny":
             return self.canny_edge(self, image)
