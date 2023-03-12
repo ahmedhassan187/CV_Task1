@@ -198,28 +198,16 @@ class Functions:
             return self.canny_edge(self, image)
 
         elif method == "roberts":
-            Gx = np.array([[1, 0], [0, -1]])
-            Gy = np.array([[0, 1], [-1, 0]])
+            Gx, Gy = self.RobertsFilter(self,image)
+            Mag = np.hypot(Gx, Gy)
+            return Mag
 
         elif method == "prewitt":
-            Gx = np.array([[-1, 0, 1], [-1, 0, 1], [-1, 0, 1]])
-            Gy = np.array([[-1, -1, -1], [0, 0, 0], [1, 1, 1]])
-
-        new_image = np.zeros((image.shape[0], image.shape[1]))
-        if method == "roberts":
-            for i in range(1, image.shape[0]-1):
-                for j in range(1, image.shape[1]-1):
-                    Gx_value = np.sum((image[i-1:i+1, j-1:j+1]*Gx))
-                    Gy_value = np.sum((image[i-1:i+1, j-1:j+1]*Gy))
-                    new_image[i][j] = np.sqrt(Gx_value**2+Gy_value**2)
-        else:
-            for i in range(1, image.shape[0]-1):
-                for j in range(1, image.shape[1]-1):
-                    Gx_value = np.sum((image[i-1:i+2, j-1:j+2]*Gx))
-                    Gy_value = np.sum((image[i-1:i+2, j-1:j+2]*Gy))
-                    new_image[i][j] = np.sqrt(Gx_value**2+Gy_value**2)
-
-        return new_image
+            Gx, Gy = self.PrewittFilter(self,image)
+            Mag = np.hypot(Gx, Gy)
+            return Mag
+        
+        pass
 
     def canny_edge(self, image, minVal=.1, maxVal=.15):
         # impelementing canny edge detection
@@ -242,6 +230,26 @@ class Functions:
         Res_y = ndimage.convolve(img, Gy)
 
         return self.Normalize(self, Res_x), self.Normalize(self, Res_y)
+    
+    
+        def RobertsFilter(self,img):
+        Gx = np.array([[1,0],[0,-1]])
+        Gy = np.array([[0,1],[-1,0]])    
+        Res_x = ndimage.convolve(img, Gx)
+
+        Res_y = ndimage.convolve(img, Gy)
+
+        return self.Normalize(Res_x), self.Normalize(Res_y)
+    
+
+    def PrewittFilter(self,img):
+        Gx = np.array([[-1,0,1],[-1,0,1],[-1,0,1]])
+        Gy = np.array([[-1,-1,-1],[0,0,0],[1,1,1]])   
+        Res_x = ndimage.convolve(img, Gx)
+
+        Res_y = ndimage.convolve(img, Gy)
+
+        return self.Normalize(Res_x), self.Normalize(Res_y)
 
     def Normalize(self, img):
         img = img/np.max(img)
