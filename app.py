@@ -10,11 +10,11 @@ def main():
         img = request.files.get('original_img')
         name = './static/imgs/' + img.filename + '.jpg'
         img.save(name)
-
+        os.remove("./static/imgs/noisy.jpg")
         print(img)
-        return render_template("main.html")
+        return render_template('main.html')
     else:
-        return render_template("main.html")
+        return render_template('main.html')
 
 
 @app.route('/filter' , methods =['POST','GET'])
