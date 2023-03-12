@@ -17,10 +17,11 @@ function json_request(data,route,state){
                 }
                 if(state == 'noise'){
                     send_img('./static/imgs/noisy.jpg','input');
-                    }
+                    console.log('wowowowo')    
+                }
                 if(state == 'output'){
                     send_img('./static/imgs/filtered_img.jpg','output');
-                    console.log('wowowowo')
+                    
                 }
                 if(state == 'hybrid'){
                     send_img('./static/imgs/hybrid_img.jpg','hybrid');

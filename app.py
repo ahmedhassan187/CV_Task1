@@ -2,6 +2,7 @@ from flask import Flask, render_template , request , jsonify , json
 from functions import Functions
 import numpy as np
 import cv2
+import os
 app = Flask(__name__)
 @app.route('/' , methods = ['POST', 'GET'] )
 def main():
@@ -22,8 +23,10 @@ def filter():
         filtertype = request.json['type']
         kernal = request.json['kernalsize']
         raduis= request.json['raduissize']
-        img = cv2.imread("./static/imgs/original_img.jpg",cv2.IMREAD_GRAYSCALE)
-        # print(img.shape)
+        if os.path.exists("./static/imgs/noisy.jpg") != True:
+            img = cv2.imread("./static/imgs/original_img.jpg",cv2.IMREAD_GRAYSCALE)
+        else:
+            img = cv2.imread("./static/imgs/noisy.jpg",cv2.IMREAD_GRAYSCALE)
         if filtertype == "gaussian-filter":
             new_img = Functions.gaussian_filter(Functions,img,int(kernal),1)
             Functions.display_image(Functions,new_img,'filtered_img')
