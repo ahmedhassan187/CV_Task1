@@ -141,6 +141,7 @@ def edgetype():
         print(type)
         img = cv2.imread('./static/imgs/inputedge.jpg',cv2.IMREAD_GRAYSCALE)
         new_img = Functions.edge_detection(Functions,img,str(type))
+        new_img = new_img*150
         Functions.display_image(Functions,new_img,"outputedge")
         return render_template("main.html")
     else:

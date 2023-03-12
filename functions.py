@@ -207,7 +207,6 @@ class Functions:
             Mag = np.hypot(Gx, Gy)
             return Mag
         
-        pass
 
     def canny_edge(self, image, minVal=.1, maxVal=.15):
         # impelementing canny edge detection
@@ -239,7 +238,7 @@ class Functions:
 
         Res_y = ndimage.convolve(img, Gy)
 
-        return self.Normalize(Res_x), self.Normalize(Res_y)
+        return self.Normalize(self,Res_x), self.Normalize(self,Res_y)
     
 
     def PrewittFilter(self,img):
@@ -249,7 +248,7 @@ class Functions:
 
         Res_y = ndimage.convolve(img, Gy)
 
-        return self.Normalize(Res_x), self.Normalize(Res_y)
+        return self.Normalize(self,Res_x), self.Normalize(self,Res_y)
 
     def Normalize(self, img):
         img = img/np.max(img)
