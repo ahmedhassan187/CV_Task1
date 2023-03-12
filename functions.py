@@ -232,7 +232,7 @@ class Functions:
         return self.Normalize(self, Res_x), self.Normalize(self, Res_y)
     
     
-        def RobertsFilter(self,img):
+    def RobertsFilter(self,img):
         Gx = np.array([[1,0],[0,-1]])
         Gy = np.array([[0,1],[-1,0]])    
         Res_x = ndimage.convolve(img, Gx)

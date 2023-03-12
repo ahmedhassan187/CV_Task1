@@ -63,7 +63,7 @@ document.addEventListener("click", (e)=>{
         noise = {
             type : noisetype,
         }
-        json_request(noise,"/noise",'input')
+        json_request(noise,"/noise",'noise')
     }
 
 })

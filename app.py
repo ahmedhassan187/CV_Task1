@@ -54,13 +54,13 @@ def noise():
         img = cv2.imread("./static/imgs/original_img.jpg",cv2.IMREAD_GRAYSCALE)
         if noiseType == "uniform-noise":
             new_img = Functions.noisy('uniform',img)
-            Functions.display_image(Functions,new_img,'original_img')
+            Functions.display_image(Functions,new_img,'noisy')
         elif noiseType == "gaussian-noise":
             new_img = Functions.noisy('gaussian',img)
-            Functions.display_image(Functions,new_img,'original_img')
+            Functions.display_image(Functions,new_img,'noisy')
         elif noiseType == "sp-noise":
             new_img = Functions.noisy('s&p',img)
-            Functions.display_image(Functions,new_img,'original_img')
+            Functions.display_image(Functions,new_img,'noisy')
         return render_template("main.html")
     else:
         return render_template("main.html")
